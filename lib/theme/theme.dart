@@ -7,17 +7,17 @@ class BlaColors {
   static Color primary            = const Color(0xFF00aff5);
 
   static Color backgroundAccent   = const Color(0xFFEDEDED);
- 
+
   static Color neutralDark        = const Color(0xFF054752);
   static Color neutral            = const Color(0xFF3d5c62);
   static Color neutralLight       = const Color(0xFF708c91);
   static Color neutralLighter     = const Color(0xFF92A7AB);
 
   static Color greyLight          = const Color(0xFFE2E2E2);
-  
+
   static Color white              = Colors.white;
 
-  static Color get backGroundColor { 
+  static Color get backGroundColor {
     return BlaColors.primary;
   }
 
@@ -41,17 +41,21 @@ class BlaColors {
     return BlaColors.greyLight;
   }
 }
-  
+
 ///
 /// Definition of App text styles.
 ///
 class BlaTextStyles {
+  /// 28
   static TextStyle heading = TextStyle(fontSize: 28, fontWeight: FontWeight.w500);
 
+  /// 16
   static TextStyle body =  TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
+  /// 13
   static TextStyle label =  TextStyle(fontSize: 13, fontWeight: FontWeight.w400);
 
+  /// 14
   static TextStyle button =  TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
 }
 
@@ -62,14 +66,21 @@ class BlaTextStyles {
 /// Bascially small (S), medium (m), large (l), extra large (x), extra extra large (xxl)
 ///
 class BlaSpacings {
+  /// 12
   static const double s = 12;
-  static const double m = 16; 
-  static const double l = 24; 
-  static const double xl = 32; 
-  static const double xxl = 40; 
+  /// 16
+  static const double m = 16;
+  /// 24
+  static const double l = 24;
+  /// 32
+  static const double xl = 32;
+  /// 40
+  static const double xxl = 40;
 
-  static const double radius = 16; 
-  static const double radiusLarge = 24; 
+  /// 16
+  static const double radius = 16;
+  /// 24
+  static const double radiusLarge = 24;
 }
 
 
@@ -81,4 +92,3 @@ ThemeData appTheme =  ThemeData(
   fontFamily: 'Eesti',
   scaffoldBackgroundColor: Colors.white,
 );
- 
