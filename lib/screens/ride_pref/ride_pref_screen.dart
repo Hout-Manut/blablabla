@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../model/ride_pref/ride_pref.dart';
 import '../../service/ride_prefs_service.dart';
 import '../../theme/theme.dart';
- 
+
 import 'widgets/ride_pref_form.dart';
 import 'widgets/ride_pref_history_tile.dart';
 
@@ -22,12 +22,8 @@ class RidePrefScreen extends StatefulWidget {
 }
 
 class _RidePrefScreenState extends State<RidePrefScreen> {
-
-  
   onRidePrefSelected(RidePref ridePref) {
- 
-   // 1 - Navigate to the rides screen (with a buttom to top animation) 
-    
+    // 1 - Navigate to the rides screen (with a buttom to top animation)
   }
 
   @override
@@ -48,24 +44,25 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
             SizedBox(height: 100),
             Container(
               margin: EdgeInsets.symmetric(horizontal: BlaSpacings.xxl),
-              decoration: BoxDecoration(
-                color: Colors.white, // White background
-                borderRadius: BorderRadius.circular(16), // Rounded corners
-              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-
-
-
                   // 2.1 Display the Form to input the ride preferences
-                  RidePrefForm(initRidePref: RidePrefService.currentRidePref,),
+                  Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      color: Colors.white, // White background
+                      border: Border.all(color: BlaColors.neutralLighter),
+                      borderRadius: BorderRadius.circular(
+                        16,
+                      ),
+                    ),
+                    child: RidePrefForm(
+                      initRidePref: RidePrefService.currentRidePref,
+                    ),
+                  ),
                   SizedBox(height: BlaSpacings.m),
-
-
-
-
 
                   // 2.2 Optionally display a list of past preferences
                   SizedBox(
@@ -105,4 +102,3 @@ class BlaBackground extends StatelessWidget {
     );
   }
 }
- 
