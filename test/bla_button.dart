@@ -1,4 +1,4 @@
-import 'package:blablabla/widgets/inputs/bla_button.dart';
+import 'package:blablabla/widgets/actions/bla_button.dart';
 import 'package:flutter/material.dart';
 
 void main() {
