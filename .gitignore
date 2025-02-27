@@ -52,6 +52,3 @@ linux/
 macos/
 web/
 windows/
-test/
-
-!lib/test/
