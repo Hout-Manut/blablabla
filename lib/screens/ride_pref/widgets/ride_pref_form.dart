@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+
 import 'package:blablabla/theme/theme.dart';
 import 'package:blablabla/utils/animations_util.dart';
 import 'package:blablabla/utils/date_time_util.dart';
 import 'package:blablabla/widgets/display/bla_divider.dart';
 import 'package:blablabla/widgets/inputs/bla_location_picker.dart';
-import 'package:flutter/material.dart';
 
 import '../../../model/ride/locations.dart';
 import '../../../model/ride_pref/ride_pref.dart';
@@ -20,8 +21,9 @@ import '../../../model/ride_pref/ride_pref.dart';
 class RidePrefForm extends StatefulWidget {
   // The form can be created with an optional initial RidePref.
   final RidePref? initRidePref;
+  final void Function(RidePref) onSearchPressed;
 
-  const RidePrefForm({super.key, this.initRidePref});
+  const RidePrefForm({super.key, this.initRidePref, required this.onSearchPressed});
 
   @override
   State<RidePrefForm> createState() => _RidePrefFormState();
@@ -30,6 +32,7 @@ class RidePrefForm extends StatefulWidget {
 class _RidePrefFormState extends State<RidePrefForm> {
   Location? departure;
   late DateTime departureDate;
+  late DateTime nowDate;
   Location? arrival;
   late int requestedSeats;
 
@@ -49,6 +52,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
       arrival = null;
       requestedSeats = 1;
     }
+    nowDate = DateTime.now();
     super.initState();
   }
 
@@ -97,7 +101,29 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
   void seatsPressed() {}
 
-  void searchPressed() {}
+  void searchPressed() {
+    if (departure == null) {
+      return;
+    }
+    if (arrival == null) {
+      return;
+    }
+    if (departureDate.isBefore(nowDate)) {
+      return;
+    }
+    if (requestedSeats < 1) {
+      return;
+    }
+
+    RidePref newRidePref = RidePref(
+      departure: departure!,
+      departureDate: departureDate,
+      arrival: arrival!,
+      requestedSeats: requestedSeats,
+    );
+
+    widget.onSearchPressed(newRidePref);
+  }
 
   // ----------------------------------
   // Compute the widgets rendering

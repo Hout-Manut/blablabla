@@ -1,3 +1,5 @@
+import 'package:blablabla/screens/ride/ride_screen.dart';
+import 'package:blablabla/utils/animations_util.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/ride_pref/ride_pref.dart';
@@ -22,8 +24,18 @@ class RidePrefScreen extends StatefulWidget {
 }
 
 class _RidePrefScreenState extends State<RidePrefScreen> {
-  onRidePrefSelected(RidePref ridePref) {
-    // 1 - Navigate to the rides screen (with a buttom to top animation)
+  void onRidePrefSelected(RidePref ridePref) async {
+    await Navigator.of(context).push(
+      AnimationUtils.createBottomToTopRoute(RideScreen(initRidePref: ridePref)),
+    );
+  }
+
+  void onSearchPressed(RidePref newRidePref) async {
+    await Navigator.of(context).push(
+      AnimationUtils.createBottomToTopRoute(
+        RideScreen(initRidePref: newRidePref),
+      ),
+    );
   }
 
   @override
@@ -54,12 +66,11 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
                     decoration: BoxDecoration(
                       color: Colors.white, // White background
                       border: Border.all(color: BlaColors.neutralLighter),
-                      borderRadius: BorderRadius.circular(
-                        16,
-                      ),
+                      borderRadius: BorderRadius.circular(16),
                     ),
                     child: RidePrefForm(
                       initRidePref: RidePrefService.currentRidePref,
+                      onSearchPressed: onSearchPressed,
                     ),
                   ),
                   SizedBox(height: BlaSpacings.m),
@@ -71,10 +82,15 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
                       shrinkWrap: true, // Fix ListView height issue
                       physics: AlwaysScrollableScrollPhysics(),
                       itemCount: RidePrefService.ridePrefsHistory.length,
-                      itemBuilder: (ctx, index) => RidePrefHistoryTile(
-                        ridePref: RidePrefService.ridePrefsHistory[index],
-                        onPressed: () => onRidePrefSelected(RidePrefService.ridePrefsHistory[index]),
-                      ),
+                      itemBuilder:
+                          (ctx, index) => RidePrefHistoryTile(
+                            ridePref: RidePrefService.ridePrefsHistory[index],
+                            onPressed: () {
+                              onRidePrefSelected(
+                                RidePrefService.ridePrefsHistory[index],
+                              );
+                            },
+                          ),
                     ),
                   ),
                 ],
