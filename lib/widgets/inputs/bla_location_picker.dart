@@ -53,9 +53,7 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
                 query = text;
                 queryLocations();
               },
-              onBackPressed: () {
-                print('abc');
-              },
+              onBackPressed: onBackPressed,
               initQuery: query,
             ),
             if (filteredLocation.isNotEmpty)

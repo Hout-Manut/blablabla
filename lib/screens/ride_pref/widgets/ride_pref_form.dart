@@ -1,6 +1,8 @@
 import 'package:blablabla/theme/theme.dart';
+import 'package:blablabla/utils/animations_util.dart';
 import 'package:blablabla/utils/date_time_util.dart';
 import 'package:blablabla/widgets/display/bla_divider.dart';
+import 'package:blablabla/widgets/inputs/bla_location_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../../../model/ride/locations.dart';
@@ -53,7 +55,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
   // ----------------------------------
   // Handle events
   // ----------------------------------
-  void departurePressed() {}
+  bool get swapVisible => departure != null || arrival != null;
 
   void swapLocations() {
     setState(() {
@@ -63,7 +65,33 @@ class _RidePrefFormState extends State<RidePrefForm> {
     });
   }
 
-  void arrivalPressed() {}
+  void departurePressed() async {
+    Location? newLocation = await Navigator.of(context).push<Location>(
+      AnimationUtils.createBottomToTopRoute(
+        BlaLocationPicker(initLocation: departure),
+      ),
+    );
+
+    if (newLocation != null) {
+      setState(() {
+        departure = newLocation;
+      });
+    }
+  }
+
+  void arrivalPressed() async {
+    Location? newLocation = await Navigator.of(context).push<Location>(
+      AnimationUtils.createBottomToTopRoute(
+        BlaLocationPicker(initLocation: arrival),
+      ),
+    );
+
+    if (newLocation != null) {
+      setState(() {
+        arrival = newLocation;
+      });
+    }
+  }
 
   void datePressed() {}
 
@@ -141,7 +169,7 @@ class _RidePrefFormState extends State<RidePrefForm> {
                 ],
               ),
             ),
-            if (departure != null)
+            if (swapVisible)
               InkWell(
                 onTap: swapLocations,
                 child: Icon(Icons.swap_vert_sharp, color: BlaColors.primary),
