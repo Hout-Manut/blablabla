@@ -1,3 +1,4 @@
+import 'package:blablabla/widgets/inputs/bla_number_spinner.dart';
 import 'package:flutter/material.dart';
 
 import 'package:blablabla/theme/theme.dart';
@@ -23,7 +24,11 @@ class RidePrefForm extends StatefulWidget {
   final RidePref? initRidePref;
   final void Function(RidePref) onSearchPressed;
 
-  const RidePrefForm({super.key, this.initRidePref, required this.onSearchPressed});
+  const RidePrefForm({
+    super.key,
+    this.initRidePref,
+    required this.onSearchPressed,
+  });
 
   @override
   State<RidePrefForm> createState() => _RidePrefFormState();
@@ -99,7 +104,19 @@ class _RidePrefFormState extends State<RidePrefForm> {
 
   void datePressed() {}
 
-  void seatsPressed() {}
+  void seatsPressed() async {
+    int? seatNum = await Navigator.of(context).push(
+      AnimationUtils.createBottomToTopRoute(
+        BlaNumberSpinner(initNumber: requestedSeats),
+      ),
+    );
+
+    if (seatNum != null) {
+      setState(() {
+        requestedSeats = seatNum;
+      });
+    }
+  }
 
   void searchPressed() {
     if (departure == null) {

@@ -36,7 +36,6 @@ class _RideScreenState extends State<RideScreen> {
 
   void getMatchingRides() {
     matchingRides = RidesService.getRidesFor(ridePref);
-    print(matchingRides);
   }
 
   void onFilterPressed() {}
