@@ -33,7 +33,6 @@ class _BlaLocationPickerState extends State<BlaLocationPicker> {
   }
 
   void onLocationSelected(Location location) {
-    print(location.name);
     Navigator.of(context).pop(location);
   }
 
