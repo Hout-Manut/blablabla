@@ -149,7 +149,7 @@ List<User> fakeUsers = [
 
 // Fake  Rides
 
-List<Ride> fakeRides = List.generate(50, (index) {
+List<Ride> fakeRides = List.generate(100, (index) {
   // Select random locations for departure & arrival (ensuring they are different)
   Location departureLocation =
       fakeLocations[random.nextInt(fakeLocations.length)];
