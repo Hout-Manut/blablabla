@@ -37,14 +37,16 @@ class RidePrefService {
   ///
   static RidePrefService get instance {
     if (_instance == null) {
-		  throw Exception("RidePreferencesService is not initialized. Call initialize() first.");
-		}
-		return _instance!;
+      throw Exception(
+        "RidePreferencesService is not initialized. Call initialize() first.",
+      );
+    }
+    return _instance!;
   }
 
   // Current preference
   RidePreference? get currentPreference {
-    print('Get  current  pref : $_currentPreference');
+    print('Get current pref: $_currentPreference');
     return _currentPreference;
   }
 
