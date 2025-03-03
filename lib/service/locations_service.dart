@@ -1,7 +1,4 @@
-import 'package:blablabla/model/ride/locations.dart';
 import 'package:blablabla/repository/locations_repository.dart';
-
-import '../dummy_data/dummy_data.dart';
 
 ////
 ///   This service handles:
@@ -33,6 +30,4 @@ class LocationsService {
     }
     return _instance!;
   }
-
-  static const List<Location> availableLocations = fakeLocations;
 }
