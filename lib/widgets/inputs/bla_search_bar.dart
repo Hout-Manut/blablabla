@@ -27,6 +27,13 @@ class _BlaSearchBarState extends State<BlaSearchBar> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    controller.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
   void onChanged(String text) {
     setState(() {
       widget.onChanged(text);
