@@ -10,6 +10,16 @@ final Random random = Random();
 /// FACE DATA FOR TEST PURPOSE
 ///
 
+// Cambodia cities
+const List<Location> cambodiaLocations = [
+  Location(name: "Phnom Penh", country: Country.cambodia),
+  Location(name: "Siem Reap", country: Country.cambodia),
+  Location(name: "Battambang", country: Country.cambodia),
+  Location(name: "Sihanoukville", country: Country.cambodia),
+  Location(name: "Kampot", country: Country.cambodia),
+];
+
+
 // Fake Cities
 const List<Location> fakeLocations = [
   // UK Cities

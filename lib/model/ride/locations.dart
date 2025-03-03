@@ -2,6 +2,7 @@
 /// Enumation of available BlaBlaCar countries
 ///
 enum Country {
+  cambodia('Cambodia'),
   france('France'),
   uk('United Kingdom'),
   spain('Spain');
