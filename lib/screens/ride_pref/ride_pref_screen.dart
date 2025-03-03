@@ -1,11 +1,11 @@
-import 'package:blablabla/screens/ride/ride_screen.dart';
-import 'package:blablabla/utils/animations_util.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/ride_pref/ride_pref.dart';
 import '../../service/ride_prefs_service.dart';
 import '../../theme/theme.dart';
 
+import '../../utils/animations_util.dart';
+import '../rides/rides_screen.dart';
 import 'widgets/ride_pref_form.dart';
 import 'widgets/ride_pref_history_tile.dart';
 
@@ -24,22 +24,25 @@ class RidePrefScreen extends StatefulWidget {
 }
 
 class _RidePrefScreenState extends State<RidePrefScreen> {
-  void onRidePrefSelected(RidePref ridePref) async {
-    await Navigator.of(context).push(
-      AnimationUtils.createBottomToTopRoute(RideScreen(initRidePref: ridePref)),
-    );
-  }
+ 
+  onRidePrefSelected(RidePreference newPreference) async {
 
-  void onSearchPressed(RidePref newRidePref) async {
-    await Navigator.of(context).push(
-      AnimationUtils.createBottomToTopRoute(
-        RideScreen(initRidePref: newRidePref),
-      ),
-    );
+    // 1 - Update the current preference
+    RidePrefService.instance.setCurrentPreference(newPreference);
+ 
+    // 2 - Navigate to the rides screen (with a buttom to top animation)
+    await Navigator.of(context).push(AnimationUtils.createBottomToTopRoute(RidesScreen()));
+  
+    // 3 - After wait  - Update the state   -- TODO MAKE IT WITH STATE MANAGEMENT
+    setState(() { });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    RidePreference? currentRidePreference = RidePrefService.instance.currentPreference;
+    List<RidePreference> pastPreferences = RidePrefService.instance.getPastPreferences();
+
     return Stack(
       children: [
         // 1 - Background  Image
@@ -48,7 +51,7 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
         // 2 - Foreground content
         Column(
           children: [
-            SizedBox(height: 16),
+            SizedBox(height: BlaSpacings.m),
             Text(
               "Your pick of rides at low price",
               style: BlaTextStyles.heading.copyWith(color: Colors.white),
@@ -56,23 +59,16 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
             SizedBox(height: 100),
             Container(
               margin: EdgeInsets.symmetric(horizontal: BlaSpacings.xxl),
+              decoration: BoxDecoration(
+                color: Colors.white, // White background
+                borderRadius: BorderRadius.circular(16), // Rounded corners
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // 2.1 Display the Form to input the ride preferences
-                  Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      color: Colors.white, // White background
-                      border: Border.all(color: BlaColors.neutralLighter),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: RidePrefForm(
-                      initRidePref: RidePrefService.currentRidePref,
-                      onSearchPressed: onSearchPressed,
-                    ),
-                  ),
+                  RidePrefForm(initialPreference: currentRidePreference, onSubmit: onRidePrefSelected),
                   SizedBox(height: BlaSpacings.m),
 
                   // 2.2 Optionally display a list of past preferences
@@ -81,16 +77,12 @@ class _RidePrefScreenState extends State<RidePrefScreen> {
                     child: ListView.builder(
                       shrinkWrap: true, // Fix ListView height issue
                       physics: AlwaysScrollableScrollPhysics(),
-                      itemCount: RidePrefService.ridePrefsHistory.length,
-                      itemBuilder:
-                          (ctx, index) => RidePrefHistoryTile(
-                            ridePref: RidePrefService.ridePrefsHistory[index],
-                            onPressed: () {
-                              onRidePrefSelected(
-                                RidePrefService.ridePrefsHistory[index],
-                              );
-                            },
-                          ),
+                      itemCount: pastPreferences.length,
+                      itemBuilder: (ctx, index) => RidePrefHistoryTile(
+                        ridePref: pastPreferences[index],
+                        onPressed: () =>
+                            onRidePrefSelected(pastPreferences[index]),
+                      ),
                     ),
                   ),
                 ],
