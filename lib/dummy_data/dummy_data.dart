@@ -19,6 +19,101 @@ const List<Location> cambodiaLocations = [
   Location(name: "Kampot", country: Country.cambodia),
 ];
 
+DateTime today = DateTime.now();
+int year = today.year;
+int month = today.month;
+int day = today.day;
+DateTime todayAt5_30AM = DateTime(year, month, day, 5, 30);
+DateTime todayAt8PM = DateTime(year, month, day, 20);
+DateTime todayAt5AM = DateTime(year, month, day, 5);
+
+List<Ride> battambangRides = [
+  Ride(
+    departureLocation: cambodiaLocations[2],
+    arrivalLocation: cambodiaLocations[1],
+    departureDate: todayAt5_30AM,
+    arrivalDateTime: todayAt5_30AM.add(const Duration(hours: 2)),
+    driver: User(
+      firstName: 'Kanika',
+      lastName: '',
+      email: 'kanika@gmail.com',
+      phone: '+855 12-345-678',
+      profilePicture: 'pfp.png',
+      verifiedProfile: false,
+    ),
+    pricePerSeat: 3.99,
+    availableSeats: 2,
+    acceptPets: false,
+  ),
+  Ride(
+    departureLocation: cambodiaLocations[2],
+    arrivalLocation: cambodiaLocations[1],
+    departureDate: todayAt8PM,
+    arrivalDateTime: todayAt8PM.add(const Duration(hours: 2)),
+    driver: User(
+      firstName: 'Chaylim',
+      lastName: '',
+      email: 'chaylim@gmail.com',
+      phone: '+855 12-345-678',
+      profilePicture: 'pfp.png',
+      verifiedProfile: true,
+    ),
+    pricePerSeat: 2.99,
+    availableSeats: 0,
+    acceptPets: false,
+  ),
+  Ride(
+    departureLocation: cambodiaLocations[2],
+    arrivalLocation: cambodiaLocations[1],
+    departureDate: todayAt5AM,
+    arrivalDateTime: todayAt5AM.add(const Duration(hours: 3)),
+    driver: User(
+      firstName: 'Mengtech',
+      lastName: '',
+      email: 'mengtech@gmail.com',
+      phone: '+855 12-345-678',
+      profilePicture: 'pfp.png',
+      verifiedProfile: false,
+    ),
+    pricePerSeat: 3.49,
+    availableSeats: 1,
+    acceptPets: false,
+  ),
+  Ride(
+    departureLocation: cambodiaLocations[2],
+    arrivalLocation: cambodiaLocations[1],
+    departureDate: todayAt8PM,
+    arrivalDateTime: todayAt8PM.add(const Duration(hours: 2)),
+    driver: User(
+      firstName: 'Limhao',
+      lastName: '',
+      email: 'limhao@gmail.com',
+      phone: '+855 12-345-678',
+      profilePicture: 'pfp.png',
+      verifiedProfile: true,
+    ),
+    pricePerSeat: 3.99,
+    availableSeats: 2,
+    acceptPets: true,
+  ),
+  Ride(
+    departureLocation: cambodiaLocations[2],
+    arrivalLocation: cambodiaLocations[1],
+    departureDate: todayAt5AM,
+    arrivalDateTime: todayAt5AM.add(const Duration(hours: 3)),
+    driver: User(
+      firstName: 'Soanda',
+      lastName: '',
+      email: 'limhao@gmail.com',
+      phone: '+855 12-345-678',
+      profilePicture: 'pfp.png',
+      verifiedProfile: true,
+    ),
+    pricePerSeat: 3.00,
+    availableSeats: 1,
+    acceptPets: false,
+  ),
+];
 
 // Fake Cities
 const List<Location> fakeLocations = [
@@ -172,13 +267,18 @@ List<Ride> fakeRides = List.generate(50, (index) {
   User driver = fakeUsers[random.nextInt(fakeUsers.length)];
 
   // Random ride details
-  DateTime departureTime = DateTime.now()
-      .add(Duration(days: random.nextInt(10), hours: random.nextInt(24)));
-  DateTime arrivalTime = departureTime
-      .add(Duration(hours: random.nextInt(5) + 2)); // Rides take 2-6 hours
+  DateTime departureTime = DateTime.now().add(
+    Duration(days: random.nextInt(10), hours: random.nextInt(24)),
+  );
+  DateTime arrivalTime = departureTime.add(
+    Duration(hours: random.nextInt(5) + 2),
+  ); // Rides take 2-6 hours
   int availableSeats = random.nextInt(4) + 1; // Between 1 and 4 seats
-  double pricePerSeat = (random.nextDouble() * 20 + 5)
-      .roundToDouble(); // Price between 5€ and 25€
+  double pricePerSeat =
+      (random.nextDouble() * 20 + 5)
+          .roundToDouble(); // Price between 5€ and 25€
+
+  bool acceptPets = random.nextBool();
 
   return Ride(
     departureLocation: departureLocation,
@@ -188,5 +288,6 @@ List<Ride> fakeRides = List.generate(50, (index) {
     driver: driver,
     availableSeats: availableSeats,
     pricePerSeat: pricePerSeat,
+    acceptPets: acceptPets,
   );
 });
