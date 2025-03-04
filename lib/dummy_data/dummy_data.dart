@@ -102,9 +102,9 @@ List<Ride> battambangRides = [
     departureDate: todayAt5AM,
     arrivalDateTime: todayAt5AM.add(const Duration(hours: 3)),
     driver: User(
-      firstName: 'Soanda',
+      firstName: 'Sovanda',
       lastName: '',
-      email: 'limhao@gmail.com',
+      email: 'sovanda@gmail.com',
       phone: '+855 12-345-678',
       profilePicture: 'pfp.png',
       verifiedProfile: true,
