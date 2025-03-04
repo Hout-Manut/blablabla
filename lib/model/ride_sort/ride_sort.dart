@@ -3,16 +3,15 @@ enum SortType {
   departureDate,
   arrivalLocation,
   arrivalDateTime,
-  driverVerified,
   pricePerSeat,
-  availableSeats,
+  availableSeats;
 }
 
-enum SortOrder { asc, desc }
+// enum SortOrder { asc, desc }
 
 class RideSort {
   final SortType type;
-  final SortOrder order;
+  final bool reversed;
 
-  RideSort({required this.type, required this.order});
+  RideSort({required this.type, this.reversed = false});
 }

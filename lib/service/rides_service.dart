@@ -36,8 +36,11 @@ class RidesService {
   ///
   ///  Return the relevant rides, given the passenger preferences
   ///
-  static List<Ride> getRidesFor(RidePreference preferences, RideFilter? filter, RideSort? sort) {
+  static List<Ride> getRidesFor(
+    RidePreference preferences, {
+    RideFilter? filter,
+    RideSort? sort,
+  }) {
     return instance.repository.getRides(preferences, filter, sort);
   }
-
 }
