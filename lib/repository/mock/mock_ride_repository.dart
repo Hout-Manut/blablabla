@@ -28,9 +28,11 @@ class MockRideRepository extends RideRepository {
           ride.availableSeats >= preference.requestedSeats;
     });
     if (filter != null) {
-      foundRides = foundRides.where((ride) {
-        return ride.acceptPets == filter.acceptPets;
-      });
+      if (filter.acceptPets != null) {
+        foundRides = foundRides.where((ride) {
+          return ride.acceptPets == filter.acceptPets;
+        });
+      }
     }
     List<Ride> foundRidesList = foundRides.toList();
     if (sort != null) {

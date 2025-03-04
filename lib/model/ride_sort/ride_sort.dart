@@ -4,14 +4,15 @@ enum SortType {
   arrivalLocation,
   arrivalDateTime,
   pricePerSeat,
-  availableSeats;
+  availableSeats,
 }
 
 // enum SortOrder { asc, desc }
+
 
 class RideSort {
   final SortType type;
   final bool reversed;
 
-  RideSort({required this.type, this.reversed = false});
+  const RideSort({required this.type, this.reversed = false});
 }

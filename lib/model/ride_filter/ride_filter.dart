@@ -1,5 +1,5 @@
 class RideFilter {
-  final bool acceptPets;
+  final bool? acceptPets;
 
-  RideFilter({required this.acceptPets});
+  RideFilter({this.acceptPets});
 }

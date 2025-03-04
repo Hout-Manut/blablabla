@@ -1,7 +1,12 @@
+import 'package:blablabla/model/ride_filter/ride_filter.dart';
+import 'package:blablabla/model/ride_sort/ride_sort.dart';
+import 'package:blablabla/screens/rides/widgets/ride_filter_model.dart';
+import 'package:blablabla/screens/rides/widgets/ride_pref_modal.dart';
+import 'package:blablabla/service/ride_prefs_service.dart';
+import 'package:blablabla/utils/animations_util.dart';
 import 'package:flutter/material.dart';
 import 'package:blablabla/screens/rides/widgets/ride_pref_bar.dart';
 
-import '../../dummy_data/dummy_data.dart';
 import '../../model/ride/ride.dart';
 import '../../model/ride_pref/ride_pref.dart';
 import '../../service/rides_service.dart';
@@ -21,25 +26,51 @@ class RidesScreen extends StatefulWidget {
 }
 
 class _RidesScreenState extends State<RidesScreen> {
-  RidePreference currentPreference =
-      fakeRidePrefs[0]; // TODO 1 :  We should get it from the service
+  RidePreference get currentPreference =>
+      RidePrefService.instance.currentPreference!; // 1
+  RideFilter? currentFilter;
+  RideSort? currentSort;
 
-  List<Ride> get matchingRides =>
-      RidesService.getRidesFor(currentPreference);
+  List<Ride> get matchingRides => RidesService.getRidesFor(
+    currentPreference,
+    filter: currentFilter,
+    sort: currentSort,
+  );
 
   void onBackPressed() {
     Navigator.of(context).pop(); //  Back to the previous view
   }
 
   void onPreferencePressed() async {
-    // TODO  6 : we should push the modal with the current pref
+    // 6
+    RidePreference? newPreference = await Navigator.of(context).push<RidePreference>(
+      AnimationUtils.createBottomToTopRoute(
+        RidePrefModal(initialPreference: currentPreference),
+      ),
+    );
 
-    // TODO 9 :  After pop, we should get the new current pref from the modal
-
-    // TODO 10 :  Then we should update the service current pref,   and update the view
+    if (newPreference != null) {
+      setState(() {
+        // 10
+        RidePrefService.instance.setCurrentPreference(newPreference);
+      });
+    }
   }
 
-  void onFilterPressed() {}
+  void onFilterPressed() async {
+    (RideFilter?, RideSort?)? newFilterAndSort = await Navigator.of(context).push<(RideFilter?, RideSort?)>(
+      AnimationUtils.createBottomToTopRoute(
+        RideFilterModel(initialFilter: currentFilter, initialSort: currentSort,),
+      ),
+    );
+
+    if (newFilterAndSort != null) {
+      setState(() {
+        currentFilter = newFilterAndSort.$1;
+        currentSort = newFilterAndSort.$2;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
