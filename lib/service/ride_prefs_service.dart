@@ -1,3 +1,5 @@
+import 'package:blablabla/listeners/ride_prefs_listener.dart';
+
 import '../model/ride_pref/ride_pref.dart';
 import '../repository/ride_preferences_repository.dart';
 
@@ -12,6 +14,13 @@ class RidePrefService {
 
   // Access to past preferences
   final RidePreferencesRepository repository;
+
+  // Listeners
+  final List<RidePrefsListener> _listeners = [];
+
+  static void addListener(RidePrefsListener listener) {
+    instance._listeners.add(listener);
+  }
 
   // The current preference
   RidePreference? _currentPreference;
@@ -53,6 +62,13 @@ class RidePrefService {
   void setCurrentPreference(RidePreference preference) {
     _currentPreference = preference;
     print('Set current pref to $_currentPreference');
+    _notifyListeners();
+  }
+
+  void _notifyListeners() {
+    for (RidePrefsListener listener in _listeners) {
+      listener.onPreferenceSelected(_currentPreference!);
+    }
   }
 
   // Past preferences
